@@ -1,2 +1,2 @@
-# data_analysis
-A repository for various research and data-driven projects
+# Data-Driven Research
+My repository for past and present data-driven projects. 
