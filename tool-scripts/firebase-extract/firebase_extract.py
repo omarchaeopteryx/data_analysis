@@ -1,10 +1,6 @@
 # Omar Malik. 2017.
 # Run this script using `python this_file.py`. Written for Python version 3.6.
-import pyrebase
-import requests
-import json
-import getpass
-import datetime
+import pyrebase, requests, json, getpass, datetime
 
 # Configuring Firebase database settings:
 config = {
@@ -18,14 +14,14 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 
 # Log the user in for security::
-email = input('email:')
-password = getpass.getpass('pass:')
+email = input('email: ')
+password = getpass.getpass('pass: ')
 user = auth.sign_in_with_email_and_password(email, password)
-userIdToken = user['idToken'];
-
+print('You are logged in!')
 print('Fetching the data...\n')
 
 # Gathering data:
+userIdToken = user['idToken'];
 r = requests.get(url='https://dowhop-lifecycle.firebaseio.com/.json?print=pretty&format=export&download=dowhop-lifecycle-export.json&auth=%s' % userIdToken)
 allData = r.json()
 
@@ -36,4 +32,4 @@ fileName = "result_%s_%s_%s-%s_%s.json" % (t.year, t.month, t.day, t.hour, t.min
 with open(fileName, 'w') as outfile:
     json.dump(allData, outfile)
 
-print('File has been written.')
+print('File has been written. Be sure to check it!')
