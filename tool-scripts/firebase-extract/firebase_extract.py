@@ -1,3 +1,4 @@
+# Omar Malik. 2017. 
 import pyrebase
 import requests
 import json
@@ -11,11 +12,10 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 
-# Get a reference to the auth service
+# Get a reference to the auth service:
 auth = firebase.auth()
 
-# Log the user in
-
+# Log the user in:
 email = input('email:')
 password = input('pass:')
 user = auth.sign_in_with_email_and_password(email, password)
@@ -27,8 +27,6 @@ print(userIdToken)
 r = requests.get(url='https://dowhop-lifecycle.firebaseio.com/.json?print=pretty&format=export&download=dowhop-lifecycle-export.json&auth=%s' % userIdToken)
 
 allData = r.json()
-# r = requests.get(url='https://dowhop-lifecycle.firebaseio.com/.json?print=pretty&format=export&download=dowhop-lifecycle-export.json&auth=nYiOjB9._9L0JojCMC8uKO-VOKjC-ddGqOFSXVms1D9eLiHbhWM')
-# print(allData)
 
-with open('results.txt', 'w') as outfile:
+with open('results.json', 'w') as outfile:
     json.dump(allData, outfile)
