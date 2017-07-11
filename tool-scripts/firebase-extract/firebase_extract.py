@@ -1,7 +1,8 @@
-# Omar Malik. 2017. 
+# Omar Malik. 2017.
 import pyrebase
 import requests
 import json
+import getpass
 
 config = {
   "apiKey": "AIzaSyB95x1zEsSkXfaDgOVdTw7ESavk9O9geN0",
@@ -17,7 +18,7 @@ auth = firebase.auth()
 
 # Log the user in:
 email = input('email:')
-password = input('pass:')
+password = getpass.getpass('pass:')
 user = auth.sign_in_with_email_and_password(email, password)
 userIdToken = user['idToken'];
 
