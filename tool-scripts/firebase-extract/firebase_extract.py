@@ -3,6 +3,7 @@ import pyrebase
 import requests
 import json
 import getpass
+import datetime
 
 config = {
   "apiKey": "AIzaSyB95x1zEsSkXfaDgOVdTw7ESavk9O9geN0",
@@ -29,5 +30,8 @@ r = requests.get(url='https://dowhop-lifecycle.firebaseio.com/.json?print=pretty
 
 allData = r.json()
 
-with open('results.json', 'w') as outfile:
+t = datetime.datetime.now()
+fileName = "result_%s_%s_%s-%s_%s.json" % (t.year, t.month, t.day, t.hour, t.minute)
+
+with open(fileName, 'w') as outfile:
     json.dump(allData, outfile)
