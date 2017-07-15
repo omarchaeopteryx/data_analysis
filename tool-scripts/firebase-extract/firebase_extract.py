@@ -1,7 +1,7 @@
-# Firebase Database Extraction.
-# Run with `python firebase_extract.py` using Python version 3.6 or above.
-# (c) 2017, DoWhop.com. Omar Malik, San Diego, CA.
+# Omar Malik for DoWhop.com, (c) 2017.
+# San Diego, CA. 
 
+# Run this script using `python firebase_extract.py`. Written for Python version 3.6.
 import pyrebase, requests, json, getpass, datetime
 
 # Configuring Firebase database settings:
@@ -18,12 +18,13 @@ auth = firebase.auth()
 # Logging in user to get temporary auth token to download db data:
 email = input('email:')
 password = getpass.getpass('pass:')
-user = auth.sign_in_with_email_and_password(email, password)
-userIdToken = user['idToken'];
 
+user = auth.sign_in_with_email_and_password(email, password)
+print('You are logged in!')
 print('Fetching the data...\n')
 
 # Gathering data via HTTP with new key:
+userIdToken = user['idToken'];
 r = requests.get(url='https://dowhop-lifecycle.firebaseio.com/.json?print=pretty&format=export&download=dowhop-lifecycle-export.json&auth=%s' % userIdToken)
 allData = r.json()
 
@@ -34,4 +35,4 @@ fileName = "result_%s_%s_%s-%s_%s.json" % (t.year, t.month, t.day, t.hour, t.min
 with open(fileName, 'w') as outfile:
     json.dump(allData, outfile)
 
-print('File has been written.')
+print('File has been written. Be sure to check it!')
