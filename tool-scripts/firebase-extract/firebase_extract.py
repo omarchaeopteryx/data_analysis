@@ -1,5 +1,7 @@
-# Omar Malik. 2017.
-# Run this script using `python this_file.py`. Written for Python version 3.6.
+# Omar Malik for DoWhop.com, (c) 2017.
+# San Diego, CA. 
+
+# Run this script using `python firebase_extract.py`. Written for Python version 3.6.
 import pyrebase, requests, json, getpass, datetime
 
 # Configuring Firebase database settings:
@@ -13,19 +15,20 @@ config = {
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 
-# Log the user in for security::
-email = input('email: ')
-password = getpass.getpass('pass: ')
+# Logging in user to get temporary auth token to download db data:
+email = input('email:')
+password = getpass.getpass('pass:')
+
 user = auth.sign_in_with_email_and_password(email, password)
 print('You are logged in!')
 print('Fetching the data...\n')
 
-# Gathering data:
+# Gathering data via HTTP with new key:
 userIdToken = user['idToken'];
 r = requests.get(url='https://dowhop-lifecycle.firebaseio.com/.json?print=pretty&format=export&download=dowhop-lifecycle-export.json&auth=%s' % userIdToken)
 allData = r.json()
 
-# Exporting file:
+# Exporting file to results subfolder:
 t = datetime.datetime.now()
 fileName = "result_%s_%s_%s-%s_%s.json" % (t.year, t.month, t.day, t.hour, t.minute)
 
